@@ -1,75 +1,119 @@
-const sum = (num1, num2) => num1 + num2
+let num1, num2, operacion
 
-const subtract = (num1, num2) => num1 - num2
-
-const multiply = (num1, num2) => num1 * num2
-
-const divide = (num1, num2) => num1 / num2
-
-const readElement1 = () => {
-    let element
-    do {
-        element = parseInt(prompt('Enter the first element to operate on: '))
-        if (isNaN(element)) {
-            alert('Please enter a number')
-        }
-    } while (isNaN(element));
-    return element
+let historial
+if (localStorage.getItem('historial') == null) {
+    historial = []
+} else {
+    historial = JSON.parse(localStorage.getItem('historial'))
+    historial.slice().reverse().forEach(element => {
+        let hist = document.createElement("p")
+        hist.innerHTML = `${element.num1} ${element.operation} ${element.num2} = ${element.result}`
+        document.getElementById("historial").appendChild(hist)
+    })
 }
 
-
-const readElement2 = () => {
-    let element
-    do {
-        element = parseInt(prompt('Enter the second element to operate on: '))
-        if (isNaN(element)) {
-            alert('Please enter a number')
-        }
-    } while (isNaN(element));
-    return element
-}
-
-const calculate = (operation) => {
-    let num1
-    let num2
-
-    switch (operation) {
-        case '+':
-            num1 = readElement1()
-            num2 = readElement2()
-            alert('The result was: ' + sum(num1, num2))
-            break;
-        case '-':
-            num1 = readElement1()
-            num2 = readElement2()
-            alert('The result was: ' + subtract(num1, num2))
-            break;
-        case '*':
-            num1 = readElement1()
-            num2 = readElement2()
-            alert('The result was: ' + multiply(num1, num2))
-            break;
-        case '/':
-            num1 = readElement1()
-            num2 = readElement2()
-            alert('The result was: ' + divide(num1, num2))
-            break;
-
-        default:
-            alert('Unknown operation: ' + operation)
-            break;
+class ultimaCuenta {
+    constructor(num1, num2, operation, result) {
+        this.num1 = num1
+        this.num2 = num2
+        this.operation = operation
+        this.result = result
     }
 }
 
+const calculator = {
+    add: (num1, num2) => num1 + num2,
+    subtract: (num1, num2) => num1 - num2,
+    multiply: (num1, num2) => num1 * num2,
+    divide: (num1, num2) => {
+        if (num2 === 0) {
+            return "No se puede dividir por cero"
+        } else {
+            return num1 / num2;
+        }
+    },
+};
+
+function obtenerValores() {
+    num1 = parseFloat(document.getElementById("num1").value)
+    num2 = parseFloat(document.getElementById("num2").value)
+    operacion = document.getElementById("operacion").value
+}
+
+function reset() {
+    document.getElementById("num1").value = ""
+    document.getElementById("num2").value = ""
+    document.getElementById("resultado").innerHTML = ""
+}
+
+const calculate = () => {
+    obtenerValores()
+    let resultado
+    if (isNaN(num1) || isNaN(num2)) {
+        resultado = "Alguno de los valores no es un número"
+    } else {
+        switch (operacion) {
+            case "+":
+                resultado = calculator.add(num1, num2)
+                break;
+            case "-":
+                resultado = calculator.subtract(num1, num2)
+                break;
+            case "*":
+                resultado = calculator.multiply(num1, num2)
+                break;
+            case "/":
+                resultado = calculator.divide(num1, num2)
+                break;
+
+            default:
+                resultado = "Uno de los valores no es un numero."
+                break;
+        }
+        if (historial.length >= 10) {
+            historial = historial.slice(1)
+            historial.push(new ultimaCuenta(num1, num2, operacion, resultado))
+        } else {
+            historial.push(new ultimaCuenta(num1, num2, operacion, resultado))
+        }
+        localStorage.setItem("historial", JSON.stringify(historial))
+        const docHist = document.getElementById("historial")
+        while (docHist.hasChildNodes()) {
+            docHist.removeChild(docHist.firstChild)
+        }
+        historial.slice().reverse().forEach(element => {
+            let hist = document.createElement("p")
+            hist.innerHTML = `${element.num1} ${element.operation} ${element.num2} = ${element.result}`
+            document.getElementById("historial").appendChild(hist)
+        })
+    }
+    document.getElementById("resultado").innerHTML = resultado
+};
 
 
-alert('Welcome to the Calculator')
-let keepGoing = false
-do {
-    let operation = prompt('What operation do you want to do? (+, -, *, /)')
-    calculate(operation)
-    keepGoing = confirm('Do you want to do another operation?')
-} while (keepGoing);
-alert('Thanks for using the Calculator')
 
 
+const buttons = document.getElementById("buttons");
+buttons.addEventListener("click", (e) => {
+    if (e.target.id == "calcularOperacion") {
+        calculate();
+    }
+    if (e.target.id == "resetForm") {
+        reset();
+    }
+});
+document.getElementById("num2").addEventListener("keypress", (e) => {
+    if (e.key === "Enter") {
+        e.preventDefault()
+        document.getElementById("calcularOperacion").click()
+    }
+})
+
+// alert('Bienvenido a mi Calculadora')
+// let keepGoing = false
+// do {
+//     let operation = prompt('¿Qué operación quieres hacer? \n\n -Suma ( + ) \n -Resta ( - ) \n -Multiplicación ( * ) \n -División ( / )')
+//     calculate(operation)
+//     keepGoing = confirm('¿Quieres hacer alguna otra operación?')
+// } while (keepGoing);
+// alert('Gracias por usar mi Calculadora')

@@ -1,12 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
     <title>Preentrega</title>
 </head>
+
 <body>
+    <header >
+        <div class="h-20 bg-slate-500 flex justify-center items-center text-5xl font-bold">
+            <h1>Bienvenido a mi calculadora</h1>
+        </div>
+        <nav>
+
+        </nav>
+    </header>
+    <main class="bg-slate-400 pt-4">
+        <section class="container mx-auto flex-col" id="segundoNum">
+            <h1 class=" text-center text-4xl font-bold">
+                Calculadora básica en JavaScript
+            </h1>
+            <div class="m-3 flex justify-center">
+                <label for="num1" class="font-semibold">Número 1:</label>
+                <input type="number" id="num1" class="ml-2 border-2 border-black bg-slate-200 text-center" />
+            </div>
+            <div class="m-3 flex justify-center">
+                <label for="num2" class="font-semibold">Número 2:</label>
+                <input type="number" id="num2" class="ml-2 border-2 border-black bg-slate-200 text-center" />
+            </div>
+            <div class="m-3 flex justify-center">
+                <label for="operacion" class="font-semibold">Operación:</label>
+                <select id="operacion" class="ml-2 border-2 border-black bg-slate-200 text-center font-semibold">
+                    <option value="+">Suma</option>
+                    <option value="-">Resta</option>
+                    <option value="*">Multiplicación</option>
+                    <option value="/">División</option>
+                </select>
+            </div>
+            <div class="m-3 flex justify-center" id="buttons">
+                <button id="calcularOperacion" class="m-1 w-48 border-2 border-black bg-slate-200 p-1 font-semibold">
+                    Calcular
+                </button>
+                <button id="resetForm" class="m-1 w-20 border-2 border-black bg-slate-200 p-1 font-semibold">
+                    Reset
+                </button>
+            </div>
+            <div class="m-3 flex justify-center">
+                <label for="resultado" class="m-1">Resultado:</label>
+                <span id="resultado" class="w-48 border-2 border-black bg-slate-200 text-center font-bold p-2"></span>
+            </div>
+        </section>
+        <section class="container mx-auto flex-col text-center w-96 bg-slate-300 p-5">
+            <h2 class="text-2xl font-bold decoration-slate-600 underline">Historial de resultados</h2>
+            <div id="historial" class="mt-4 font-bold">
+            </div>
+        </section>
+    </main>
+    <footer>
+        <div class="h-20 bg-slate-500 flex justify-center items-center text-3xl">
+            <h2>Todos los derechos reservados ©.</h2>
+        </div>
+    </footer>
     <script src="./main.js"></script>
 </body>
+
 </html>
