@@ -11,7 +11,7 @@
     <title>Preentrega</title>
 </head>
 
-<body>
+<body class="bg-slate-500">
     <header>
         <div class="h-20 bg-slate-500 flex justify-center items-center text-5xl font-bold">
             <h1>Bienvenido a mi calculadora</h1>
@@ -60,9 +60,43 @@
             <div id="historial" class="mt-4 font-bold">
 
             </div>
-            <button id="resetHist" class="m-1 w-20 border-2 border-black bg-slate-200 p-1 font-semibold">
-                Reset
+            <button id="resetHist" class="m-1 w-40 border-2 border-black bg-slate-200 p-1 font-semibold">
+                Borrar historial
             </button>
+        </section>
+        <section class="m-5">
+            <h2 class="text-center text-4xl font-bold m-3">Calculadora de cambio de divisas</h2>
+            <div class="flex flex-col items-center">
+                <div class="flex">
+                    <p class="font-semibold">¿Cuánto son</p>
+                    <input type="number" id="cantidad" class="mr-2 ml-2 border-2 border-black bg-slate-200 text-center">
+                    <select name="" id="original" class="mr-2 ml-2 border-2 border-black bg-slate-200 text-center">
+                        <option value="UYU">Pesos Uruguayos</option>
+                        <option value="ARS">Pesos Argentinos</option>
+                        <option value="USD">Dólares</option>
+                        <option value="EUR">Euros</option>
+                    </select>
+                    <p>en</p>
+                    <select name="" id="divisa" class="mr-2 ml-2 border-2 border-black bg-slate-200 text-center">
+                        <option value="USD">Dólares</option>
+                        <option value="EUR">Euros</option>
+                        <option value="ARS">Pesos Argentinos</option>
+                        <option value="UYU">Pesos Uruguayos</option>
+                    </select>
+                    <p class="font-semibold">?</p>
+                </div>
+                <div>
+                    <button id="calcularDivisa" class="m-1 w-48 border-2 border-black bg-slate-200 p-1 font-semibold">
+                        Convertir
+                    </button>
+                </div>
+                <div class="m-3 flex justify-center">
+                    <label for="resultado" class="m-1 font-semibold">La conversión solicitada sería:</label>
+                    <span id="cambioMoneda"
+                        class="w-48 border-2 border-black bg-slate-200 text-center font-bold p-2"></span>
+                </div>
+            </div>
+
         </section>
     </main>
     <footer>

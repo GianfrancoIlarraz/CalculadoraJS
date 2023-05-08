@@ -50,7 +50,7 @@ const calculate = () => {
     obtenerValores()
     let resultado
     if (isNaN(num1) || isNaN(num2)) {
-        resultado = "Alguno de los valores no es un número"
+        resultado = null
     } else {
         switch (operacion) {
             case "+":
@@ -87,7 +87,7 @@ const calculate = () => {
             document.getElementById("historial").appendChild(hist)
         })
     }
-    document.getElementById("resultado").innerHTML = resultado
+    document.getElementById("resultado").innerHTML =  resultado ?? 'La operación no es válida'
 };
 
 const reiniciarHistorial = () => {
@@ -99,6 +99,39 @@ const reiniciarHistorial = () => {
     }
     reset()
 }
+
+
+
+
+const cambioDivisas = () => {
+    let original = document.getElementById('original').value
+    let cantidad = document.getElementById('cantidad').value
+    let divisa = document.getElementById('divisa').value
+
+    let myHeaders = new Headers();
+    myHeaders.append("apikey", "dIPlqUY5OZbX7LXntxyCUOuuNDtmlupH");
+
+    let requestOptions = {
+        method: 'GET',
+        redirect: 'follow',
+        headers: myHeaders
+    };
+
+    if (!isNaN(parseInt(cantidad)) && cantidad >= 0){
+        fetch(`https://api.apilayer.com/exchangerates_data/convert?to=${divisa}&from=${original}&amount=${cantidad}`, requestOptions)
+        .then(response => response.text())
+        .then(result => {
+            document.getElementById('cambioMoneda').innerHTML = JSON.parse(result).result + ` ${divisa}`
+        })
+        .catch(error => console.log('error', error));
+    } else {
+        document.getElementById('cambioMoneda').innerHTML = 'No has ingresado un valor válido'
+    }
+}
+
+document.getElementById('calcularDivisa').addEventListener('click', (e) => {
+    cambioDivisas()
+})
 
 
 const buttons = document.getElementById("buttons");
