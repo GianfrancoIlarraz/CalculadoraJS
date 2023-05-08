@@ -90,7 +90,15 @@ const calculate = () => {
     document.getElementById("resultado").innerHTML = resultado
 };
 
-
+const reiniciarHistorial = () => {
+    localStorage.removeItem("historial")
+    historial = []
+    const docHist = document.getElementById("historial")
+    while (docHist.hasChildNodes()) {
+        docHist.removeChild(docHist.firstChild)
+    }
+    reset()
+}
 
 
 const buttons = document.getElementById("buttons");
@@ -102,6 +110,24 @@ buttons.addEventListener("click", (e) => {
         reset();
     }
 });
+
+document.getElementById("resetHist").addEventListener("click", (e) => {
+    swal.fire({
+        title: '¿Quieres borrar el historial?',
+        text: 'No podrás deshacer este cambio',
+        confirmButtonText: 'Sí',
+        confirmButtonColor: '#3085d6',
+        showCancelButton: true,
+        cancelButtonColor: '#d33',
+        cancelButtonText: 'No'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            reiniciarHistorial()
+            swal.fire('Historial borrado :)')
+        }
+    })
+})
+
 document.getElementById("num2").addEventListener("keypress", (e) => {
     if (e.key === "Enter") {
         e.preventDefault()
@@ -109,11 +135,4 @@ document.getElementById("num2").addEventListener("keypress", (e) => {
     }
 })
 
-// alert('Bienvenido a mi Calculadora')
-// let keepGoing = false
-// do {
-//     let operation = prompt('¿Qué operación quieres hacer? \n\n -Suma ( + ) \n -Resta ( - ) \n -Multiplicación ( * ) \n -División ( / )')
-//     calculate(operation)
-//     keepGoing = confirm('¿Quieres hacer alguna otra operación?')
-// } while (keepGoing);
-// alert('Gracias por usar mi Calculadora')
+
